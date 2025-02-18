@@ -1,0 +1,73 @@
+veracode_static_scan:
+  push:
+    trigger: true  # Trigger the scan when a push event occurs (i.e., new code is pushed to the branch)
+    branches_to_run:
+      - main  # Run the scan on the 'main' branch
+      - dev  # Run the scan on the 'dev' branch
+      - feature/*  # Run the scan on any branch that starts with 'feature/' (feature branches)
+      - demo
+  pull_request:
+    trigger: true  # Trigger the scan when a pull request event occurs
+    action:
+      - opened  # Trigger scan when the PR is opened
+      - synchronize  # Trigger scan when the PR is updated
+    target_branch:
+      - main  # Target branch for the PR is 'main', so the scan will compare to the main branch
+  analysis_on_platform: true  # Store the scan results on the Veracode platform for historical tracking
+  analysis_branch: main  # Ensure that scan results are associated with the 'main' branch on Veracode platform
+  break_build_policy_findings: true  # Fail the build if any security policy violations are found
+  break_build_invalid_policy: true  # Fail the build if the scan encounters an invalid policy
+  break_build_on_error: true  # Fail the build if the scan encounters any error (e.g., scanning failure) or the scan failed to complete in time.
+  error_message: "Veracode static scan failed. Contact your Veracode administrator."  # Custom error message when scan fails
+  policy: 'Veracode Recommended Medium + SCA'  # Specify which Veracode security policy to use 
+  create_code_scanning_alert: false  # Create a GitHub security alert for issues found during the scan (GitHub Enterprise plan required)
+  create_issue: true  # Create a GitHub Issue for the detected security findings
+  issues:
+    trigger: false  # No GitHub issue will be automatically triggered during the scan (this prevents creating unnecessary issues)
+    commands:
+      - "Veracode Static Scan"  # Command to identify this scan as part of Veracode static scanning process
+
+veracode_sca_scan:
+  push:
+    trigger: true  # Trigger the scan on push events
+    branches_to_run:
+      - main  # Run the scan on the 'main' branch
+      - dev  # Run the scan on the 'dev' branch
+      - feature/*  # Run the scan on any feature branches (branches starting with 'feature/')
+      - demo
+  pull_request:
+    trigger: true  # Trigger the scan on pull request events
+    action:
+      - opened  # Trigger scan when a pull request is opened
+      - synchronize  # Trigger scan when a pull request is synchronized with new changes
+    target_branch:
+      - main  # Target branch for the PR is 'main'
+  break_build_on_error: true  # Fail the build if the scan encounters any errors
+  error_message: "Veracode SCA scan failed. Contact your Veracode administrator."  # Custom error message for SCA scan failure
+  issues:
+    trigger: false  # No automatic GitHub issue will be created
+    commands:
+      - "Veracode SCA Scan"  # Command to identify this scan as part of the Veracode Software Composition Analysis (SCA) process
+
+veracode_iac_secrets_scan:
+  push:
+    trigger: true  # Trigger the scan on push events
+    branches_to_run:
+      - main  # Run the scan on the 'main' branch
+      - dev  # Run the scan on the 'dev' branch
+      - feature/*  # Run the scan on any feature branches (branches starting with 'feature/')
+      - demo
+  pull_request:
+    trigger: true  # Trigger the scan on pull request events
+    action:
+      - opened  # Trigger scan when the pull request is opened
+      - synchronize  # Trigger scan when the pull request is synchronized with new changes
+    target_branch:
+      - main  # Target branch for the pull request is 'main'
+  break_build_policy_findings: true  # Fail the build if any security policy violations are found
+  break_build_on_error: true  # Fail the build if the scan encounters any errors
+  error_message: "Veracode IAC secrets scan failed. Contact your Veracode administrator."  # Custom error message for IAC secrets scan failure
+  issues:
+    trigger: false  # No automatic GitHub issue will be created
+    commands:
+      - "Veracode IAC Scan"  # Command to identify this scan as part of the Veracode Infrastructure as Code (IAC) secrets scanning process
