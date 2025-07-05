@@ -1,0 +1,19 @@
+name: Veracode Scans
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * 1'  # Weekly baseline scan
+
+jobs:
+  baseline:
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    uses: Veracode-CSE-Demos/baseline_mitigations/veracode/baseline.yml@main
+    secrets: inherit
+
+  delta:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    uses: Veracode-CSE-Demos/baseline_mitigations/veracode/delta.yml@main
+    secrets: inherit
