@@ -10,10 +10,10 @@ on:
 jobs:
   baseline:
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
-    uses: Veracode-CSE-Demos/baseline_mitigations/veracode/baseline.yml@main
+    uses: Veracode-CSE-Demos/baseline_mitigations/.github/workflows/baseline.yml@main
     secrets: inherit
 
   delta:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
-    uses: Veracode-CSE-Demos/baseline_mitigations/veracode/delta.yml@main
+    uses: Veracode-CSE-Demos/baseline_mitigations/.github/workflows/delta.yml@main
     secrets: inherit
