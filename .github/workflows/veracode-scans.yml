@@ -17,3 +17,9 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     uses: Veracode-CSE-Demos/veracode-ci-templates/.github/workflows/delta.yml@main
     secrets: inherit
+
+  delta-mitigated:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    uses: Veracode-CSE-Demos/veracode-ci-templates/.github/workflows/veracode-delta-mitigated.yml@main
+    secrets: inherit
+
